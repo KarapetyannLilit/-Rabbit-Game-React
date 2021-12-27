@@ -33,13 +33,7 @@ const defaultState = {
     }
 }
 export const characterReducer = (state = defaultState, action) => {
-    let name = action.name;
     return {
         ...state,
-        [name]: {
-            id: action.id,
-            count: action.count,
-            position: [action.position]
-        }
     }
 }
