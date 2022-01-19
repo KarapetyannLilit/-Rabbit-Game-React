@@ -1,7 +1,6 @@
-import { FREE_CELL, board, boardSize } from './Main';
 
 let boardFind = new Array();
-const getAllPossibleLegalDirections = () => {
+const getAllPossibleLegalDirections = (FREE_CELL, board, boardSize) => {
     for (let i = 0; i < boardSize; i++) {
         boardFind[i] = [];
         for (let j = 0; j < boardSize; j++) {
@@ -14,8 +13,8 @@ const getAllPossibleLegalDirections = () => {
     }
 }
 
-export const selectMinimumDistanceMove = (position, end, j) => {
-    getAllPossibleLegalDirections();
+export const selectMinimumDistanceMove = (position, end, j,FREE_CELL, board, boardSize) => {
+    getAllPossibleLegalDirections(FREE_CELL, board, boardSize);
     const visited = [];
     boardFind[position[0]][position[1]] = 1;
     visited.push([position]);
