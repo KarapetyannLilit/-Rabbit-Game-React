@@ -47,9 +47,7 @@ const defaultState = {
 export const GameReducer = (state = defaultState, action) => {
     switch (action.type) {
         case 'CREATE_BOARD':
-            // size = action.size;
             state.boardSize = action.id;
-            document.getElementById("buttons").style.display = "none";
             state.board = Array(state.boardSize).fill(0).map(row => new Array(state.boardSize).fill(FREE_CELL))
 
             return {
@@ -94,15 +92,6 @@ export const GameReducer = (state = defaultState, action) => {
                 }
             }
         }
-        //    let [newRabbitX, newRabbitY] = changeRabbitPosiotion(state.direction)
-        //     return {
-        //         ...state,
-        //         rabbit:{
-        //             ...state.rabbit,
-        //             position: [newRabbitX, newRabbitY]
-        //         }
-        //     }
-        // case 'ATTACK_RABBIT'
 
         default: return {
             ...state

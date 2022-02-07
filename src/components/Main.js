@@ -6,6 +6,7 @@ import { CreateUi, CharacterBoard } from './CreateUi';
 export default function Main() {
     const dispatch = useDispatch();
     const characters = useSelector(state => state.characters);
+
     const startGame = (id) => {
         dispatch({ type: 'CREATE_BOARD', id: id });
         dispatch({ type: 'POSITION_CHARACTERS' });
@@ -25,6 +26,7 @@ export default function Main() {
     const close = () => {
         window.location.reload();
     }
+
     return (
         <div>
             <h1>Rabbit Game</h1>
