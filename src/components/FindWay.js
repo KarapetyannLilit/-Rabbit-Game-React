@@ -1,3 +1,4 @@
+import { FREE_CELL } from "../components/Const";
 
 let boardFind = new Array();
 const getAllPossibleLegalDirections = (FREE_CELL, board, boardSize) => {
@@ -13,7 +14,7 @@ const getAllPossibleLegalDirections = (FREE_CELL, board, boardSize) => {
     }
 }
 
-export const selectMinimumDistanceMove = (position, end, j,FREE_CELL, board, boardSize) => {
+export const selectMinimumDistanceMove = (position, end, j, board, boardSize) => {
     getAllPossibleLegalDirections(FREE_CELL, board, boardSize);
     const visited = [];
     boardFind[position[0]][position[1]] = 1;

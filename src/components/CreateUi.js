@@ -1,88 +1,64 @@
+import { FREE_CELL, RABBIT_CELL, HOME_CELL, WOLF_CELL, FENCE_CELL } from "../components/Const"
 
-import { board, boardUi, boardSize,characters } from './Main';
 
-// const createEmptyBoard = (size) => {
-//     boardSize = size;
-//     document.getElementById("buttons").style.display = "none";
-//     for (let i = 0; i < boardSize; i++) {
-//         boardUi[i] = document.createElement('tr');
-//         for (let j = 0; j < boardSize; j++) {
-//             boardUi[i][j] = document.createElement('td');
-//             boardUi[i].appendChild(boardUi[i][j]);
-//         }
-//         document.getElementById('board').appendChild(boardUi[i]);
-//     }
-// }
+export const CharacterBoard = (board, i, j) => {
+    // for (let i = 0; i < boardSize; i++) {
+    //     for (let j = 0; j < boardSize; j++) {
+    //         // Array(boardSize).fill(<tr></tr>).map(row => new Array(state.boardSize).fill(<td className={characterBoard()}></td>))
 
-export const gameOver = (x, y, win) => {
-    document.onkeydown = null;
-    document.getElementById("myModal").style.display = "block";
-    if (win) {
-        document.querySelector(".modal-content").innerHTML = "You Won!";
-    } else {
-        document.querySelector(".modal-content").innerHTML = "You Lose!";
+    //         switch (board[i][j]) {
+    //             case WOLF_CELL:
+    //                 return 'wolf';
+    //             case FENCE_CELL:
+    //                 return "fence";
+    //             case HOME_CELL:
+    //                 return 'home';
+    //             case RABBIT_CELL:
+    //                 return 'rabbit';
+    //             default:
+    //                 return '';
+    //         }
+    //     }
+    // }
+
+    switch (board[i][j]) {
+        case WOLF_CELL:
+            return 'wolf';
+        case FENCE_CELL:
+            return "fence";
+        case HOME_CELL:
+            return 'home';
+        case RABBIT_CELL:
+            return 'rabbit';
+        default:
+            return '';
     }
 }
 
-export const close = () => {
-    window.location.reload();
-}
+export const CreateUi = (board, boardSize) => {
+    return (
+        <div id="board" >
+            {/* 
+            {Array(boardSize).fill(<tr></tr>).forEach((_, i) => {
+                board[i] = new Array(boardSize);
+                Array(boardSize).fill(<td className={CharacterBoard(board, i,j)}></td>).forEach((_, j) => {
+                });
+            })} */}
 
-export const createUiElement = (x, y, character) => {
-    boardUi[x][y].classList.add(character.name);
-}
-
-export const removeUiElement = (x, y, character) => {
-    boardUi[x][y].classList.remove(character.name);
-}
-
-export const createUi = () => {
-    // board = Array(boardSize).fill(0).map(row => new Array(boardSize).fill(FREE_CELL))
-
-
-    // return new Array(board.length).fill(characters.name).forEach(character => positionSingleCharacter(boardUi, character));
-    // // return board
-
-    let el;
-    for (let i = 0; i < boardSize; i++) {
-        for (let j = 0; j < boardSize; j++) {
-            // debugger
-            if (board[i][j] === characters.wolf.id) {
-                el = characters.wolf.name;
-                // break;
+            {board.map((i) => (
+                <tr key={i}>
+                    {
+                        board.map((j) => (
+                            <td id='td' className={CharacterBoard(board, i, j)} key={j}>
+                                {
+                                }
+                            </td>
+                        ))
+                    }
+                </tr>
+            ))
             }
-            if (board[i][j] === characters.fence.id) {
-                el = characters.fence.name;
-                // break;
-            }
-            if (board[i][j] === characters.home.id) {
-                el = characters.home.name;
-                // break;
-            }
-            if (board[i][j] === characters.rabbit.id) {
-                el = characters.rabbit.name;
+        </div>
 
-            }
-            // return el;
-            // switch (board[i][j]) {
-            //     case characters.wolf.id:
-            //         console.log("hp");
-            //         return 'wolf';
-            //         break;
-            //     case characters.fence.id:
-            //         return "fence";
-            //         break;
-            //     case characters.home.id:
-            //         return 'home';
-            //         break;
-            //     case characters.rabbit.id:
-            //         return 'rabbit';
-            //         break;
-            //     default :
-            //         return;
-            //         break;
-            // }
-        }
-        return el;
-    }
+    );
 }
