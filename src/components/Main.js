@@ -1,12 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CreateUi, CharacterBoard } from './CreateUi';
 
 export default function Main() {
     const dispatch = useDispatch();
     const characters = useSelector(state => state.characters);
-
     const startGame = (id) => {
         dispatch({ type: 'CREATE_BOARD', id: id });
         dispatch({ type: 'POSITION_CHARACTERS' });
@@ -21,9 +20,8 @@ export default function Main() {
 
     const reactOnKeyboard = (direction) => {
         dispatch({ type: 'MOVE_CHARACTERS', direction: direction })
-        CreateUi();
-
     }
+
     const close = () => {
         window.location.reload();
     }
@@ -37,13 +35,7 @@ export default function Main() {
                     <button type="submit" onClick={() => startGame(10)} >10x10</button>
                 </div>
                 <div id="board">
-
-                    <CreateUi/>
-                    {/* {
-                        Array(boardSize).fill(<tr></tr>).map(row => new Array(state.boardSize).fill(<td className={characterBoard()}></td>))
-
-                    } */}
-
+                    <CreateUi board={characters.board}></CreateUi>
                 </div>
                 <div id="myModal" className="modal">
                     <span className="close" onClick={close}>&times;</span>
