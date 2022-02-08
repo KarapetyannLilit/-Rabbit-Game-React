@@ -1,43 +1,49 @@
-import { FREE_CELL, RABBIT_CELL, HOME_CELL, WIN, MOVE } from "../components/Const";
-import { gameOver } from "./GameState";
+import {
+  FREE_CELL,
+  RABBIT_CELL,
+  HOME_CELL,
+  WIN,
+  MOVE,
+} from "../components/Const"
+import { gameOver } from "./GameState"
 
-const moveRabbit = (newRabbitX, newRabbitY, rabbit, board) => {
-    if (board[newRabbitX][newRabbitY] === FREE_CELL || board[newRabbitX][newRabbitY] === HOME_CELL) {
-        board[x][y] = FREE_CELL;
-        if (board[newRabbitX][newRabbitY] === HOME_CELL) {
-            WIN = true;
-            gameOver(WIN);
-            MOVE = false;
-        }
-        x = newRabbitX; y = newRabbitY;
-        rabbit.position = [{ x, y }];
-        board[x][y] = RABBIT_CELL;
+const moveRabbit = (src, dst, rabbit, board) => {
+  const [x, y] = src
+  const [newX, newY] = dst
+
+  if (board[newX][newY] === HOME_CELL || board[newX][newY] === FREE_CELL) {
+    if (board[newX][newY] === HOME_CELL) {
+      gameOver(WIN)
     }
+
+    rabbit.positions = [[newX, newY]]
+
+    board[x][y] = FREE_CELL
+    board[newX][newY] = RABBIT_CELL
+  }
 }
 
-let x, y, nextPos;
 export const ChangeRabbitPosiotion = (direction, rabbit, board, boardSize) => {
-    [{ x, y }] = rabbit.position;
-    let newRabbitX = x, newRabbitY = y;
-    switch (direction.code) {
-        case "ArrowLeft":
-            newRabbitY = y > 0 ? y - 1 : nextPos = boardSize - 1;
-            moveRabbit(x, newRabbitY, rabbit, board);
-            break;
-        case "ArrowRight":
-            newRabbitY = y < boardSize - 1 ? y + 1 : nextPos = 0;
-            moveRabbit(x, newRabbitY, rabbit, board);
-            break;
-        case "ArrowUp":
-            newRabbitX = x > 0 ? x - 1 : nextPos = boardSize - 1;
-            moveRabbit(newRabbitX, y, rabbit, board);
-            break;
-        case "ArrowDown":
-            newRabbitX = x < boardSize - 1 ? x + 1 : nextPos = 0;
-            moveRabbit(newRabbitX, y, rabbit, board);
-            break;
-        default: MOVE = false;
-            break;
-    }
-}
+  const [x, y] = rabbit.positions[0]
+  let newX = x,
+    newY = y
 
+  switch (direction.code) {
+    case "ArrowLeft":
+      newY = y > 0 ? y - 1 : boardSize - 1
+      break
+    case "ArrowRight":
+      newY = y < boardSize - 1 ? y + 1 : 0
+      break
+    case "ArrowUp":
+      newX = x > 0 ? x - 1 : boardSize - 1
+      break
+    case "ArrowDown":
+      newX = x < boardSize - 1 ? x + 1 : 0
+      break
+    default:
+      break
+  }
+
+  moveRabbit([x, y], [newX, newY], rabbit, board)
+}
