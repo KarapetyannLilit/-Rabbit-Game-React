@@ -86,9 +86,8 @@ export const GameReducer = (state = defaultState, action) => {
             if (MOVE) {
                 for (let i = 0; i < state.wolf.count; i++) {
                     const wolfCoord = Object.values(state.wolf.position[i]);
-                    console.log(state.wolf.position[i]);
                     const rabbitCoord = Object.values(state.rabbit.position[0]);
-                    AttackRabbit(wolfCoord, rabbitCoord, i,state.wolf, state.board, state.boardSize);
+                    AttackRabbit(wolfCoord, rabbitCoord, i,state.wolf, state.board, state.boardSize, state.wolf.forbiddenMoves);
                 }
             }
         }

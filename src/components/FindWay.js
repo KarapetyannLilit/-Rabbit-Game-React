@@ -1,51 +1,34 @@
-import { FREE_CELL } from "../components/Const";
-
-let boardFind = new Array();
-const getAllPossibleLegalDirections = (FREE_CELL, board, boardSize) => {
-    for (let i = 0; i < boardSize; i++) {
-        boardFind[i] = [];
-        for (let j = 0; j < boardSize; j++) {
-            if (board[i][j] != 0) {
-                boardFind[i][j] = 1;
-            } else {
-                boardFind[i][j] = FREE_CELL;
-            }
-        }
+export const nextCoordOfWolf = (position, end, board, forbiddenMoves) => {
+    const possibleMoves = getAllPossibleDirections(position)
+    const legalMoves = getLegalMoves(possibleMoves, board, forbiddenMoves)
+    if (legalMoves.length) {
+        return selectMinimumDistanceMove(legalMoves, end)
     }
 }
 
-export const selectMinimumDistanceMove = (position, end, j, board, boardSize) => {
-    getAllPossibleLegalDirections(FREE_CELL, board, boardSize);
-    const visited = [];
-    boardFind[position[0]][position[1]] = 1;
-    visited.push([position]);
-    let path;
-    while (visited.length > 0) {
-        path = visited.shift();
-        const coord = path[path.length - 1];
-        const direcTo = [
-            [coord[0] + 1, coord[1]], [coord[0], coord[1] + 1],
-            [coord[0] - 1, coord[1]], [coord[0], coord[1] - 1]
-        ];
-        for (let i = 0; i < direcTo.length; i++) {
-            if (direcTo[i][0] == end[0] && direcTo[i][1] == end[1]) {
-                path.concat([end]);
-                if (path.length > 1) {
-                    return path[1];
-                } else {
-                    return end;
-                }
-            }
-            if (direcTo[i][0] < 0 || direcTo[i][0] >= boardFind.length
-                || direcTo[i][1] < 0 || direcTo[i][1] >= boardFind[0].length
-                || boardFind[direcTo[i][0]][direcTo[i][1]] != 0) {
-                continue;
-            }
-            boardFind[direcTo[i][0]][direcTo[i][1]] = 1;
-            visited.push(path.concat([direcTo[i]]));
-        }
-    }
-    return path[0];
+export const getAllPossibleDirections = ([x, y]) => [
+    [x - 1, y], [x, y - 1],
+    [x + 1, y], [x, y + 1],
+]
+
+export const getLegalMoves = (moves, board, forbidddenMoves) => {
+    return moves.filter(
+        ([x, y]) =>
+            x >= 0 && x < board.length &&
+            y >= 0 && y < board.length &&
+            forbidddenMoves.includes(board[x][y]) === false
+    )
 }
 
+export const calcDistance = ([x0, y0]) => ([x1, y1]) => Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2))
 
+export const selectMinimumDistanceMove = (moves, target) => {
+    const distances = moves.map(calcDistance(target))
+    const minDistance = Math.min(...distances)
+    const minMoveIndex = distances.findIndex((d) => d === minDistance)
+    return moves[minMoveIndex]
+}
+
+export const getMinCoord = (distances, mindistance, moves) => {
+    return moves[distances.indexOf(mindistance)]
+}

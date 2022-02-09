@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { CreateUi, CharacterBoard } from './CreateUi';
+import { CreateUi } from './CreateUi';
 
 export default function Main() {
     const dispatch = useDispatch();

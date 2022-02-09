@@ -1,18 +1,17 @@
-import { FREE_CELL, HOME_CELL, WIN, MOVE } from "../components/Const";
+import { FREE_CELL, RABBIT_CELL, HOME_CELL, WIN, MOVE } from "../components/Const";
 import { gameOver } from "./GameState";
 
 const moveRabbit = (newRabbitX, newRabbitY, rabbit, board) => {
-    // MOVE = true;
     if (board[newRabbitX][newRabbitY] === FREE_CELL || board[newRabbitX][newRabbitY] === HOME_CELL) {
         board[x][y] = FREE_CELL;
-        if (board[newRabbitX][newRabbitY]=== HOME_CELL) {
+        if (board[newRabbitX][newRabbitY] === HOME_CELL) {
             WIN = true;
             gameOver(WIN);
             MOVE = false;
-            return;
         }
         x = newRabbitX; y = newRabbitY;
         rabbit.position = [{ x, y }];
+        board[x][y] = RABBIT_CELL;
     }
 }
 
